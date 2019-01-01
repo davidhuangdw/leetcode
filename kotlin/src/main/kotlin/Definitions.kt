@@ -23,3 +23,12 @@ class ListNode(var `val`: Int = 0) {
     }
   }
 }
+
+class Interval(
+    var start: Int = 0,
+    var end: Int = 0
+){
+  fun asPair(): Pair<Int, Int>{
+    return Pair(start, end)
+  }
+}

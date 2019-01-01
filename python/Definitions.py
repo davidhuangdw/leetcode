@@ -20,3 +20,17 @@ class ListNode:
             node.next = head.next
             head.next = node
         return head.next
+
+
+class Interval:
+    def __init__(self, s=0, e=0):
+        self.start = s
+        self.end = e
+
+    @staticmethod
+    def from_array_list(*array_list):
+        return list(map(lambda arr: Interval(*arr), array_list))
+
+    @staticmethod
+    def to_array_list(*interval_list):
+        return list(map(lambda i: [i.start, i.end], interval_list))
