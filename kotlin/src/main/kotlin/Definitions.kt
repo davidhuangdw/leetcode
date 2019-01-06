@@ -32,3 +32,8 @@ class Interval(
     return Pair(start, end)
   }
 }
+
+class TreeNode(var `val`: Int = 0) {
+  var left: TreeNode? = null
+  var right: TreeNode? = null
+}

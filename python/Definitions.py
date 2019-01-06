@@ -34,3 +34,10 @@ class Interval:
     @staticmethod
     def to_array_list(*interval_list):
         return list(map(lambda i: [i.start, i.end], interval_list))
+
+
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
