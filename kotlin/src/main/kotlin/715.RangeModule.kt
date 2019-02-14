@@ -1,6 +1,6 @@
 import org.junit.Assert.assertEquals
 import org.junit.Test
-//https://leetcode.com/problems/range-module/submissions/
+//https://leetcode.com/problems/range-module
 
 
 class RangeModule{
@@ -57,4 +57,57 @@ class RangeModule{
     assertEquals(false, queryRange(13, 15))
     assertEquals(true, queryRange(16, 17))
   }
+}
+
+class RangeModuleBySegmentTree{
+  data class Node(val begin: Int, val end: Int, var cover: Boolean? = false){
+    var left: Node? = null
+    var right: Node? = null
+    val md = (begin+end)/2
+
+    fun update(l: Int, r: Int, state: Boolean){
+      if(r <= begin || end <= l || cover==state) return
+      if(l<=begin && end<=r){
+        cover = state
+        return
+      }
+      if(left == null) left = Node(begin, md)
+      if(right == null) right = Node(md, end)
+      if(cover != null){
+        left!!.cover = cover
+        right!!.cover = cover
+      }
+      cover = null
+      left!!.update(l, r, state)
+      right!!.update(l, r, state)
+    }
+
+    fun covered(l: Int, r: Int): Boolean{
+      if(r <= begin || end <= l || cover==true) return true
+      return if(cover != null) cover!! else left!!.covered(l, r) && right!!.covered(l, r)
+    }
+  }
+
+  val root = Node(0, 1e9.toInt())
+  fun addRange(left: Int, right: Int) {
+    root.update(left, right, true)
+  }
+
+  fun queryRange(left: Int, right: Int): Boolean {
+    return root.covered(left, right)
+  }
+
+  fun removeRange(left: Int, right: Int) {
+    root.update(left, right, false)
+  }
+
+  @Test
+  fun test1(){
+    addRange(10, 20)
+    removeRange(14, 16)
+    assertEquals(true, queryRange(10, 14))
+    assertEquals(false, queryRange(13, 15))
+    assertEquals(true, queryRange(16, 17))
+  }
+
 }
