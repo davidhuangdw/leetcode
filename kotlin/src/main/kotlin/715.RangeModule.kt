@@ -60,31 +60,33 @@ class RangeModule{
 }
 
 class RangeModuleBySegmentTree{
-  data class Node(val begin: Int, val end: Int, var cover: Boolean? = false){
-    var left: Node? = null
-    var right: Node? = null
+  class Node(val begin: Int, val end: Int, var reset: Boolean? = false){
     val md = (begin+end)/2
+    val left by lazy { Node(begin, md) }
+    val right by lazy { Node(md, end) }
+
+    fun pushdown(){
+      if(reset != null){
+        left.reset = reset
+        right.reset = reset
+        reset = null
+      }
+    }
 
     fun update(l: Int, r: Int, state: Boolean){
-      if(r <= begin || end <= l || cover==state) return
-      if(l<=begin && end<=r){
-        cover = state
-        return
+      if(r <= begin || end <= l || reset==state) return
+      if(l<=begin && end<=r)
+        reset = state
+      else {
+        pushdown()
+        left.update(l, r, state)
+        right.update(l, r, state)
       }
-      if(left == null) left = Node(begin, md)
-      if(right == null) right = Node(md, end)
-      if(cover != null){
-        left!!.cover = cover
-        right!!.cover = cover
-      }
-      cover = null
-      left!!.update(l, r, state)
-      right!!.update(l, r, state)
     }
 
     fun covered(l: Int, r: Int): Boolean{
-      if(r <= begin || end <= l || cover==true) return true
-      return if(cover != null) cover!! else left!!.covered(l, r) && right!!.covered(l, r)
+      return r <= begin || end <= l ||
+          (reset ?: (left.covered(l, r) && right.covered(l, r)))
     }
   }
 
