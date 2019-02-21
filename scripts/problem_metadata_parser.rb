@@ -36,4 +36,6 @@ class ProblemMetadataParser
     metadata[STAT_KEY]
   end
 
+  alias source= metadata=
+
 end

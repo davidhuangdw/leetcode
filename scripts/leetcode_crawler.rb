@@ -11,7 +11,8 @@ class LeetcodeCrawler
   def fetch_problems
     url = 'https://leetcode.com/api/problems/algorithms/'
     @client.get(url).tap do |resp|
-      raise "get_problems failed: #{resp.status}\n#{resp.body}" if resp.status != 200
+      puts resp.body
+      raise "\nLeetcode API get_problems failed: #{resp.status}\n#{resp.body}" if error_resp?(resp)
     end
   end
 
@@ -43,7 +44,11 @@ class LeetcodeCrawler
         'cookie' => @cookie
     }
     @client.post(url, body, headers).tap do |resp|
-      raise "graphql failed: #{resp.status}\n#{resp.body}" if resp.status != 200
+      raise "\nLeetcode API graphql failed: #{resp.status}\n#{resp.body}" if error_resp?(resp)
     end
+  end
+
+  def error_resp?(resp)
+    resp.status != 200 || !resp.body['errors'].nil?
   end
 end

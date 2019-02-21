@@ -1,0 +1,31 @@
+root_dir: crawled
+question_subdir: question_data
+solution_subdir: solution_data
+company_subdir: companies
+problem_list_filename: problem_list
+
+cookie: <%= ENV['LEETCODE'] %>
+
+problems_url_prefix: https://leetcode.com/problems/
+code_snippets:
+  langs_search_order:
+    kotlin:
+      src_dir: kotlin/src/main/kotlin/
+      suffix: .kt
+      comment_prefix: //
+      front_lines: "import org.junit.Assert\nimport org.junit.Test"
+    python3:
+      src_dir: python/
+      suffix: .py
+      separator: _
+      comment_prefix: '#'
+      front_lines: from unittest import TestCase
+    python:
+      src_dir: python/
+      suffix: .py
+      separator: _
+      comment_prefix: '#'
+      front_lines: from unittest import TestCase
+
+overwrite_existing_question: no
+problem_list_keep_duration: <%= 24 * 3600 %>
