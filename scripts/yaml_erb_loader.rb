@@ -16,7 +16,7 @@ module YamlErbLoader
   private
 
   def deep_symbolize_keys(hash_or_value)
-      hash_or_value.is_a?(Hash) ? Hash[*hash_or_value.map{|k, v| [k.to_sym, deep_symbolize_keys(v)]}.flatten] : hash_or_value
+      hash_or_value.is_a?(Hash) ? Hash[*hash_or_value.map{|k, v| [k.to_sym, deep_symbolize_keys(v)]}.reduce([], :+)] : hash_or_value
   end
 end
 

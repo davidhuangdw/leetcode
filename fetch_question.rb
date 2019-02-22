@@ -34,6 +34,7 @@ class FetchQuestionJob
 
 end
 
+# main:
 raise "missing the argument" if ARGV.empty?
 FetchQuestionJob.new(ARGV[0], cookie: DEFAULTS_CONFIG[:cookie]).run
 

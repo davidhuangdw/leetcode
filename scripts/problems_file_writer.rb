@@ -89,6 +89,10 @@ class ProblemsFileWriter
     File.join(root_dir, question_subdir)
   end
 
+  def company_dir
+    File.join(root_dir, company_subdir)
+  end
+
   private
 
   def save(text, file_path)

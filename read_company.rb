@@ -17,11 +17,11 @@ require_relative 'scripts/questions'
 # }
 #
 
-
 raise "missing the argument - company_name" if ARGV.empty?
 print_keys = %w[front_id difficulty encounters paid_only likes dislikes title]
-list = Questions.new.read_company_list(ARGV[0]){|item| [item['encounters'], item['likes']] }
+sort_keys = %w[encounters likes]
+lines = Questions.new.read_company_list(ARGV[0]){|item| sort_keys.map{|key| item[key]} }
            .map{|item| print_keys.map{|key| item[key]}.join("\t") }
 
 puts print_keys.join("\t")
-puts list
+puts lines

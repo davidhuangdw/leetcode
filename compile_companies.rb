@@ -43,6 +43,48 @@ class CompileCompaniesJob
     end
   end
 
+  def convert_to_texts
+    # item example:
+    # {
+    #   "id"=>"965",
+    #   "front_id"=>"929",
+    #   "title"=>"unique-email-addresses",
+    #   "difficulty"=>"Easy",
+    #   "likes"=>321,
+    #   "dislikes"=>86,
+    #   "paid_only"=>false,
+    #   "encounters"=>265
+    # }
+    #
+
+    sort_keys = DEFAULTS_CONFIG[:company_data][:sort_keys]
+    print_keys = DEFAULTS_CONFIG[:company_data][:print_keys]
+    inline_separator = "\t"
+
+    current_companies.each do |company|
+      lines = questions.read_company_list(company){|item| sort_keys.map{|k| item[k]} }
+                  .map{|item| print_keys.map{|k| item[k]}.join(inline_separator)}
+      lines = [print_keys.join(inline_separator)] + lines
+      filer.class.save(lines.join("\n"), company_text_file_path(company))
+    end
+  end
+
+  private
+
+  def company_text_file_path(company)
+    dir = filer.company_dir + '_texts'
+    File.join(dir, company)
+  end
+
+  def current_companies
+    Dir::entries(ProblemsFileWriter.new.company_dir)
+        .select{|name| name[0] != '.'}
+  end
+
 end
 
-CompileCompaniesJob.new(cookie: DEFAULTS_CONFIG[:cookie]).run
+
+# main:
+job = CompileCompaniesJob.new(cookie: DEFAULTS_CONFIG[:cookie])
+job.run
+job.convert_to_texts

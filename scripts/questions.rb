@@ -38,8 +38,8 @@ class Questions
   end
 
   def read_company_list(company, &order)
-    JSON.parse(filer.read_company_file(company) || '{}').values
-        .sort_by(&order).to_a.reverse
+    list = JSON.parse(filer.read_company_file(company) || '{}').values
+    order ? list.sort_by(&order).to_a.reverse : list
   end
 
   def get_question_body(slug_title, &after_fetch)
