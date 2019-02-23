@@ -19,10 +19,10 @@ class BackspaceStringCompare(TestCase):
     def test1(self):
         self.assertEqual(True, self.backspaceCompare("ab#c", "ad#c"))
 
-    def test1(self):
+    def test2(self):
         self.assertEqual(True, self.backspaceCompare("a##c", "#a#c"))
 
-    def test1(self):
+    def test3(self):
         self.assertEqual(False, self.backspaceCompare("a#c", "b"))
 
         
