@@ -76,6 +76,7 @@ class QuestionJsonParser
 
   def camelized_title
     title.split('-').map{|s| s.capitalize}.join
+      .tap{|str| str.insert(0, 'X') if str[0] =~ /[[:digit:]]/}
   end
 
   def question
