@@ -10,7 +10,7 @@ class RedundantConnectionII(TestCase):
         """
         parent = dict()
         cands = None
-        last = None
+        circle_last = None
         root = dict()
 
         def find(nd):
@@ -25,14 +25,14 @@ class RedundantConnectionII(TestCase):
             else:
                 parent[to] = fr
                 if find(fr) == to:
-                    last = [fr, to]
+                    circle_last = [fr, to]
                 else:
                     root[to] = find(fr)
 
         if not cands:
-            return last
+            return circle_last
         else:
-            return cands[0] if last else cands[-1]
+            return cands[0] if circle_last else cands[-1]
 
     def test1(self):
         self.assertEqual([2,3], self.findRedundantDirectedConnection([[1,2], [1,3], [2,3]]))
