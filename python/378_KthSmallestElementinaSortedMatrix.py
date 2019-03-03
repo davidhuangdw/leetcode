@@ -11,14 +11,22 @@ class KthSmallestElementinaSortedMatrix(TestCase):
         :rtype: int
         """
         n, m = len(matrix), len(matrix[0])
-        que = [(matrix[0][0], 0, 0)]
-        for _ in range(k-1):
-            v, i, j = heapq.heappop(que)
-            if j+1 < m:
-                heapq.heappush(que, (matrix[i][j+1], i, j+1))
-            if j == 0 and i+1 < n:
-                heapq.heappush(que, (matrix[i+1][j], i+1, j))
-        return que[0][0]
+
+        def count_le(v):
+            res, j = 0, m-1
+            for i in range(n):
+                while j >= 0 and matrix[i][j] > v:
+                    j -= 1
+                res += j+1
+            return res
+        l, r = matrix[0][0], matrix[n-1][m-1]
+        while l <= r:
+            md = (l+r) >> 1
+            if count_le(md) < k:
+                l = md+1
+            else:
+                r = md-1
+        return l
 
     def test1(self):
         self.assertEqual(13, self.kthSmallest(
