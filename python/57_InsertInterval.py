@@ -1,6 +1,8 @@
 from unittest import TestCase
 from Definitions import Interval
 # https://leetcode.com/problems/insert-interval/
+import bisect
+
 
 class InsertInterval(TestCase):
     def insert(self, intervals, newInterval):
@@ -18,6 +20,37 @@ class InsertInterval(TestCase):
                                    max(newInterval.end, intervals[r].end))
         intervals[l:r+1] = [newInterval]
         return intervals
+
+    # # binary search
+    # def insert(self, intervals, newInterval):
+    #     n = len(intervals)
+    #
+    #     def bis(op):          # return the index of the first op(interval)==true
+    #         l, r = 0, n-1
+    #         while l <= r:
+    #             m = (l+r) >> 1
+    #             if op(intervals[m]):
+    #                 r = m - 1
+    #             else:
+    #                 l = m + 1
+    #         return l
+    #     i = bis(lambda inv: inv.end >= newInterval.start)
+    #     j = bis(lambda inv: inv.start > newInterval.end) - 1
+    #     if i <= j:
+    #         newInterval.start = min(newInterval.start, intervals[i].start)
+    #         newInterval.end = max(newInterval.end, intervals[j].end)
+    #     intervals[i: j+1] = [newInterval]
+    #     return intervals
+
+    # # bisect
+    # def insert(self, intervals, newInterval):
+    #     i = bisect.bisect_left([i.end for i in intervals], newInterval.start)
+    #     j = bisect.bisect_right([i.start for i in intervals], newInterval.end)-1
+    #     if i <= j:
+    #         newInterval.start = min(newInterval.start, intervals[i].start)
+    #         newInterval.end = max(newInterval.end, intervals[j].end)
+    #     intervals[i: j+1] = [newInterval]
+    #     return intervals
 
     def test1(self):
         self.assertEqual([[1,5],[6,9]], Interval.to_array_list(*self.insert(Interval.from_array_list(
