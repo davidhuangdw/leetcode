@@ -1,6 +1,6 @@
 from unittest import TestCase
-from collections import deque
 # https://leetcode.com/problems/sliding-window-maximum/
+import collections
 
 
 class SlidingWindowMaximum(TestCase):
@@ -10,18 +10,16 @@ class SlidingWindowMaximum(TestCase):
         :type k: int
         :rtype: List[int]
         """
-        ret = []
-        maxes = deque()
-
+        res, maxes = [], collections.deque()
         for i, v in enumerate(nums):
-            if maxes and maxes[0] <= i-k:
-                maxes.popleft()
             while maxes and nums[maxes[-1]] < v:
                 maxes.pop()
             maxes.append(i)
+            if maxes[0] <= i-k:
+                maxes.popleft()
             if i >= k-1:
-                ret.append(nums[maxes[0]])
-        return ret
+                res.append(nums[maxes[0]])
+        return res
 
     def test1(self):
         self.assertEqual([3,3,5,5,6,7], self.maxSlidingWindow([1,3,-1,-3,5,3,6,7], 3))
