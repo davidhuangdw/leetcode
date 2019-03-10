@@ -1,5 +1,6 @@
 from unittest import TestCase
 # https://leetcode.com/problems/minimum-height-trees/
+import collections
 
 
 class MinimumHeightTree(TestCase):
@@ -46,10 +47,62 @@ class MinimumHeightTree(TestCase):
         dfs(fr, 0)
         return ret
 
+    # # by longest path
+    # def findMinHeightTrees(self, n, edges):
+    #     if not n: return []
+    #     e = [[] for _ in range(n)]
+    #     for u, v in edges:
+    #         e[u].append(v)
+    #         e[v].append(u)
+    #
+    #     def longest_path(u, par=None):
+    #         mx = []
+    #         for v in e[u]:
+    #             if v != par:
+    #                 now = longest_path(v, u)
+    #                 if len(now) > len(mx):
+    #                     mx = now
+    #         mx.append(u)
+    #         return mx
+    #     fr = longest_path(0)[0]
+    #     path = longest_path(fr)
+    #     k = len(path)
+    #     return path[(k-1)>>1 : (k+2)>>1]
+    #
+    #
+    # # # bfs by removing leafs
+    # def findMinHeightTrees(self, n, edges):
+    #     if not n: return []
+    #     e = [[] for _ in range(n)]
+    #     deg = [0 for _ in range(n)]
+    #     for u, v in edges:
+    #         e[u].append(v)
+    #         e[v].append(u)
+    #         deg[u] += 1
+    #         deg[v] += 1
+    #
+    #     leaves = [u for u in range(n) if deg[u] <= 1]
+    #     done = set(leaves)
+    #
+    #     while len(done) < n:
+    #         nxt = []
+    #         for u in leaves:
+    #             for v in e[u]:
+    #                 if v in done: continue
+    #                 deg[v] -= 1
+    #                 if deg[v] == 1:
+    #                     done.add(v)
+    #                     nxt.append(v)
+    #         leaves = nxt
+    #     return list(leaves)
+
     def test1(self):
         self.assertEqual([1], self.findMinHeightTrees(4, [[1, 0], [1, 2], [1, 3]]))
 
     def test2(self):
-        self.assertEqual([3, 4], self.findMinHeightTrees(6, [[0, 3], [1, 3], [2, 3], [4, 3], [5, 4]]))
+        self.assertEqual({3, 4}, set(self.findMinHeightTrees(6, [[0, 3], [1, 3], [2, 3], [4, 3], [5, 4]])))
+
+    def test3(self):
+        self.assertEqual([0], self.findMinHeightTrees(3, [[0,1],[0,2]]))
 
 
