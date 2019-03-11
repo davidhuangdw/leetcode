@@ -3,22 +3,15 @@ from unittest import TestCase
 
 
 class FindPeakElement(TestCase):
-    def findPeakElement(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        n = len(nums)
-        l, r = 0, n-1
-        while l <= r:
-            m = int((r+l)/2)
-            if 0 <= m-1 and nums[m-1] > nums[m]:
-                r = m-1
-            elif m+1 < n and nums[m] < nums[m+1]:
+    def findPeakElement(self, nums: 'List[int]') -> int:
+        l, r = 0, len(nums)-1
+        while l < r:
+            m = (r+l) >> 1                  # always l <= m < m+1 <= r
+            if nums[m] < nums[m+1]:
                 l = m+1
             else:
-                return m
-        return -1
+                r = m
+        return l
 
     def test1(self):
         self.assertEqual(2, self.findPeakElement([1,2,3,1]))
