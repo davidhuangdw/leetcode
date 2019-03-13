@@ -45,18 +45,22 @@ class WordBreakII(TestCase):
 
     # # by trie tree
     # def wordBreak(self, s: str, wordDict: 'List[str]') -> 'List[str]':
-    #     n, root = len(s), TrieNode()
+    #     n, root = len(s), {}
     #     for word in wordDict:
-    #         root.add(word)
+    #         node = root
+    #         for c in word:
+    #             if c not in node: node[c] = {}
+    #             node = node[c]
+    #         node['$'] = None
     #
     #     pre = [[] for _ in range(n+1)]
     #     for i in range(n):
     #         if i and not pre[i]: continue
     #         node = root
     #         for j in range(i, n):
-    #             if s[j] not in node.nxt: break
-    #             node = node.nxt[s[j]]
-    #             if node.end:
+    #             if s[j] not in node: break
+    #             node = node[s[j]]
+    #             if '$' in node:
     #                 pre[j+1].append(i)
     #     result = []
     #
