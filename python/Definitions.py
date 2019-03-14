@@ -1,3 +1,5 @@
+import collections
+
 class ListNode:
     def __init__(self, x):
         self.val = x
@@ -41,3 +43,35 @@ class TreeNode:
         self.val = x
         self.left = None
         self.right = None
+
+    @staticmethod
+    def build_from_layerorder(order):
+        if not order: return None
+        i, n, root = 1, len(order), TreeNode(order[0])
+        que = collections.deque([root])
+        while i < n:
+            par = que.popleft()
+            if order[i] is not None:
+                par.left = l = TreeNode(order[i])
+                que.append(l)
+            if i+1 < n and order[i+1] is not None:
+                par.right = r = TreeNode(order[i+1])
+                que.append(r)
+            i += 2
+        return root
+
+    @staticmethod
+    def build_from_preorder(preorder):
+        if not preorder: return None
+        n = len(preorder)
+
+        def dfs(i):
+            if i >= n or preorder[i] is None: return None, i+1
+            node = TreeNode(preorder[i])
+            l, j = dfs(i+1)
+            r, j = dfs(j)
+            node.left = l
+            node.right = r
+            return node, j
+        return dfs(0)[0]
+
