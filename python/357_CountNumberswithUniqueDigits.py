@@ -8,11 +8,9 @@ class CountNumberswithUniqueDigits(TestCase):
         :type n: int
         :rtype: int
         """
-        muls = [9, *range(9, 0, -1)]
-        ret = 1
-        mul = 1
-        for i in range(min(n, 10)):
-            mul *= muls[i]
+        ret, mul = 1, 1
+        for k in [9, *range(9, 0, -1)][:n]:
+            mul *= k
             ret += mul
         return ret
 

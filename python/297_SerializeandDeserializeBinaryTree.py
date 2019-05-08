@@ -73,6 +73,29 @@ class SerializeandDeserializeBinaryTree(TestCase):
     #             node.right = dec(next(it))
     #             node = node.right
     #     return root
+    #
+    # # post-order des
+    # def deserialize(self, data):
+    #     it = iter(data.split(","))
+    #     def dec():
+    #         s = next(it)
+    #         return None if s == 'n' else TreeNode(int(s))
+    #     pars, pre = [], None
+    #     cur = root = dec()
+    #     while cur or pars:
+    #         if cur:
+    #             pars.append((cur, 0))
+    #             pre = cur = dec()
+    #         else:
+    #             p, k = pars.pop()
+    #             if k == 0:
+    #                 p.left = pre
+    #                 pars.append((p, 1))
+    #                 pre = cur = dec()
+    #             else:
+    #                 p.right = pre
+    #                 pre = p
+    #     return root
 
     # # iterative BFS:
     # def serialize(self, root):

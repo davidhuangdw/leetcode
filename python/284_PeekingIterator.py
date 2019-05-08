@@ -12,28 +12,28 @@ class PeekingIterator:
         self.fetch()
 
     def fetch(self):
-        self.pk = [self.iterator.next()] if self.iterator.hasNext() else None
+        self.prefetch = self.iterator.next() if self.iterator.hasNext() else None
+        # self.pk = [self.iterator.next()] if self.iterator.hasNext() else None
 
     def peek(self):
         """
         Returns the next element in the iteration without advancing the iterator.
         :rtype: int
         """
-        return self.pk[0] if self.pk else None
+        return self.prefetch if self.prefetch else None
 
     def next(self):
         """
         :rtype: int
         """
-        ret = self.pk[0]
+        ret = self.prefetch
         self.fetch()
         return ret
-
 
     def hasNext(self):
         """
         :rtype: bool
         """
-        return self.pk is not None
+        return self.prefetch is not None
 
 

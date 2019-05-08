@@ -1,5 +1,6 @@
 from unittest import TestCase
 # https://leetcode.com/problems/count-of-range-sum/
+import itertools
 
 
 class CountofRangeSum(TestCase):

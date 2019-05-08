@@ -9,16 +9,14 @@ class PatchingArray(TestCase):
         :type n: int
         :rtype: int
         """
-        ret = 0
-        cur = 0
-        for v in nums:
-            while v > cur+1 and cur < n:
+        x = i = ret = 0
+        while x < n:
+            if i < len(nums) and nums[i] <= x+1:
+                x += nums[i]
+                i += 1
+            else:
                 ret += 1
-                cur += cur+1
-            cur += v
-        while cur < n:
-            ret += 1
-            cur += cur+1
+                x += x+1
         return ret
 
     def test1(self):

@@ -16,14 +16,11 @@ class LowestCommonAncestorOfABinaryTree(TestCase):
 
         def dfs(node, pre):
             nonlocal res
-            if not node: return 0
-            if pre >= 2: return 0       # prune
+            if not node or pre >= 2: return 0
             cnt = int(node in (p, q))
-            lc = dfs(node.left, pre+cnt)
-            cnt += lc
-            rc = dfs(node.right, pre+cnt)
-            cnt += rc
-            if cnt == 2 and lc < 2 and rc < 2:
+            cnt += dfs(node.left, pre+cnt)
+            cnt += dfs(node.right, pre+cnt)
+            if cnt == 2 and not res:
                 res = node
             return cnt
         dfs(root, 0)
@@ -40,10 +37,9 @@ class LowestCommonAncestorOfABinaryTree(TestCase):
     #         else:
     #             node, pre = inorders.pop()
     #             found += node in (p, q)
-    #             if found == 2:
-    #                 return lpar if pre else node
-    #             elif not pre and found == 1:        # count of left partial subtree is exactly 1
+    #             if found >= 1 and not pre:
     #                 lpar = node
+    #             if found == 2: return lpar
     #             cur = node.right
 
     def test1(self):

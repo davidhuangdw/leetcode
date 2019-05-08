@@ -9,15 +9,14 @@ class HIndex(TestCase):
         :rtype: int
         """
         n = len(citations)
-        cnt = [0]*(n+1)
+        cnt = [0 for _ in range(n)]
         for c in citations:
-            cnt[min(c, n)] += 1
-        sum = 0
-        for i in range(n, 0, -1):
-            sum += cnt[i]
-            if sum >= i:
-                return i
-        return 0
+            if c < n: cnt[c] += 1
+        at_least = n
+        for i, c in enumerate(cnt):
+            if at_least < i: return i-1
+            at_least -= c
+        return n - (at_least < n)
 
     def test1(self):
         self.assertEqual(3, self.hIndex([3,0,6,1,5]))

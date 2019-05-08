@@ -27,6 +27,28 @@ class NumberofIslands(TestCase):
                 if 0 <= ni < len(grid) and 0 <= nj < len(grid[ni]) and grid[ni][nj] == "1":
                     que.append((ni, nj))
 
+    # # union-find
+    # def numIslands(self, grid):
+    #     root, cnt = {}, 0
+    #
+    #     def find(pos):
+    #         if pos not in root: return None
+    #         if root[pos] != pos: root[pos] = find(root[pos])
+    #         return root[pos]
+    #     for i in range(len(grid)):
+    #         for j in range(len(grid[i])):
+    #             if grid[i][j] == "0": continue
+    #             cnt += 1
+    #             pos = (i, j)
+    #             root[pos] = pos
+    #             for nei in (j-1 >= 0 and (i, j-1), i-1 >= 0 and (i-1, j)):
+    #                 if not nei: continue
+    #                 rn, rp = find(nei), find(pos)
+    #                 if rn and rn != rp:
+    #                     root[rp] = rn
+    #                     cnt -= 1
+    #     return cnt
+
     def test1(self):
         grid = [
             list("11110"),

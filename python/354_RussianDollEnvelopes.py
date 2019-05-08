@@ -1,5 +1,6 @@
 from unittest import TestCase
 # https://leetcode.com/problems/russian-doll-envelopes/
+import bisect
 
 
 class RussianDollEnvelopes(TestCase):
@@ -23,9 +24,16 @@ class RussianDollEnvelopes(TestCase):
             ret = max(ret, l)
         return ret
 
+    def maxEnvelopes(self, envelopes):
+        pre = []
+        for _, h in sorted(envelopes, key=lambda x: (x[0], -x[1])):
+            i = bisect.bisect_left(pre, h)
+            if i < len(pre):
+                pre[i] = h
+            else:
+                pre.append(h)
+        return len(pre)
+
     def test1(self):
         self.assertEqual(3, self.maxEnvelopes([[5,4],[6,4],[6,7],[2,3]]))
-
-
-
 

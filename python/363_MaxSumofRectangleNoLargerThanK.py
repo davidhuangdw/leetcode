@@ -1,5 +1,6 @@
 from unittest import TestCase
 # https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/
+import bisect
 
 
 class MaxSumofRectangleNoLargerThanK(TestCase):
@@ -44,6 +45,26 @@ class MaxSumofRectangleNoLargerThanK(TestCase):
                     sums.append(sums[-1] + cols[c])
                 merge(sums)
         return ret
+
+    # def maxSumSubmatrix(self, matrix, K):
+    #     if not (matrix and matrix[0]): return None
+    #     n, m, ret = len(matrix), len(matrix[0]), float("-inf")
+    #     if n > m:
+    #         matrix = list(zip(*matrix))
+    #         n, m = m, n
+    #
+    #     for i in range(n):
+    #         col = [0 for _ in range(m)]
+    #         for j in range(i, n):
+    #             pre, cur = [0], 0
+    #             for k in range(m):
+    #                 col[k] += matrix[j][k]
+    #                 cur += col[k]
+    #                 i = bisect.bisect_left(pre, cur-K)
+    #                 if i < len(pre):
+    #                     ret = max(ret, cur - pre[i])
+    #                 bisect.insort(pre, cur)
+    #     return ret
 
     def test1(self):
         self.assertEqual(2, self.maxSumSubmatrix([[1,0,1],[0,-2,3]], 2))

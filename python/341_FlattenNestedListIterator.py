@@ -66,6 +66,36 @@ class NestedIterator(object):
         """
         return self.cache is not None
 
+# # without prefetch:
+# class NestedIterator(object):
+#
+#     def __init__(self, nestedList):
+#         self.stack = []
+#         if nestedList:
+#             self.stack.append((0, nestedList))
+#             self.reach()
+#
+#     def reach(self):
+#         s = self.stack
+#         if not s: return
+#         i, a = s.pop()
+#         while not a[i].isInteger():
+#             if i+1 < len(a): s.append((i+1, a))
+#             i, a = 0, a[i].getList()
+#             if a: continue
+#             if not s: return
+#             i, a = s.pop()
+#         s.append((i, a))
+#
+#     def next(self):
+#         if not self.stack: return
+#         i, a = self.stack.pop()
+#         if i+1 < len(a): self.stack.append((i+1, a))
+#         self.reach()
+#         return a[i].getInteger()
+#
+#     def hasNext(self):
+#         return bool(self.stack)
 
 def flat(it):
     ret = []

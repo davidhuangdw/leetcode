@@ -30,6 +30,22 @@ class ExpressionAddOperators(TestCase):
         dfs(0, 0, 0, "")
         return ret
 
+    def addOperators(self, num, target):
+        n, res = len(num), []
+        def dfs(i, sum, mul, s, exp):
+            if i == n:
+                if target == sum + mul*int(s): res.append(exp)
+                return
+            c = num[i]
+            if s != "0": dfs(i+1, sum, mul, s+c, exp+c)
+            mul *= int(s)
+            dfs(i+1, sum, mul, c, exp+'*'+c)
+            sum += mul
+            dfs(i+1, sum, 1, c, exp+'+'+c)
+            dfs(i+1, sum, -1, c, exp+'-'+c)
+        if n: dfs(1, 0, 1, num[0], num[0])
+        return res
+
     def test1(self):
         self.assertEqual({"1+2+3", "1*2*3"}, set(self.addOperators("123", 6)))
 

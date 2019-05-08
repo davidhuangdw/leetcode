@@ -9,20 +9,12 @@ class WildcardMatching(TestCase):
         :type p: str
         :rtype: bool
         """
-        n = len(s)
-        mat = [True] + [False]*n
-
-        for i in range(len(p)):
-            if p[i] == "*":
-                for j in range(n):
-                    mat[j+1] = mat[j+1] or mat[j]
-            else:
-                # mt[0] = False         # bug!: should assign at last because right to left
-                for j in range(n-1, -1, -1):
-                    mat[j+1] = (p[i] == s[j] or p[i] == '?') and mat[j]
-                mat[0] = False
-
-        return mat[n]
+        mat = [i == 0 for i in range(len(s)+1)]
+        for pi in p:
+            pre, mat[0] = mat[0], mat[0] and pi == '*'
+            for j, sj in enumerate(s):
+                pre, mat[j+1] = mat[j+1], mat[j+1] or mat[j] if pi == '*' else pre and pi in (sj, '?')
+        return mat[-1]
 
     def test1(self):
         self.assertEqual(False, self.isMatch("aa", "a"))
@@ -38,3 +30,6 @@ class WildcardMatching(TestCase):
 
     def test5(self):
         self.assertEqual(False, self.isMatch("acdcb", "a*c?b"))
+
+    def test6(self):
+        self.assertEqual(False, self.isMatch("aab", "c*a*b"))

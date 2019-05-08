@@ -45,6 +45,19 @@ class TreeNode:
         self.right = None
 
     @staticmethod
+    def to_layerorder(root):
+        layer, res = [root], []
+        while layer:
+            nxt = []
+            for node in layer:
+                res.append(node and node.val)
+                if not node: continue
+                nxt.append(node.left)
+                nxt.append(node.right)
+            layer = nxt if any(x is not None for x in nxt) else []
+        return res
+
+    @staticmethod
     def build_from_layerorder(order):
         if not order: return None
         i, n, root = 1, len(order), TreeNode(order[0])
