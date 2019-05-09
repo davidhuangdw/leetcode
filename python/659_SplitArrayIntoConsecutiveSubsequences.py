@@ -20,8 +20,23 @@ class SplitArrayIntoConsecutiveSubsequences(TestCase):
             if i == n or nums[i] != nums[i-1]+1:
                 if not (y == z == 0): return False
                 x = y = z = 0
-            operator.add
         return True
+
+    # def isPossible(self, nums: 'List[int]') -> 'bool':
+    #     x = y = z = 0
+    #     pre = nums[0]-1
+    #     count = {}
+    #     for v in nums:
+    #         count[v] = count.get(v, 0) + 1
+    #     for v in count:
+    #         c = count[v]
+    #         if pre != v-1:
+    #             if y or z: return False
+    #             x = 0
+    #         c -= y + z
+    #         if c < 0: return False
+    #         x, y, z, pre = y+min(x,c), z, max(c-x, 0), v
+    #     return y+z == 0
 
     # # greedy: chain as long as possible
     # # rough prove:

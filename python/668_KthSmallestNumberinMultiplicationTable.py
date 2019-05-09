@@ -21,6 +21,14 @@ class KthSmallestNumberinMultiplicationTable(TestCase):
                 cnt += cur
             return cnt
 
+        def count(v):
+            j, res = n, 0
+            for i in range(1, m+1):
+                while j and i*j > v:
+                    j -= 1
+                res += j
+            return res
+
         l, r = 1, m*n
         while l <= r:
             md = ((r-l) >> 1) + l

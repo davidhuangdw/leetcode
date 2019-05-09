@@ -17,10 +17,7 @@ class FrogJump(TestCase):
             if cur == last: return True
             if (cur, k) in tried: return False
             tried.add((cur, k))
-            for nk in range(max(1, k-1), k+2):
-                if (cur+nk in stones) and dp(cur+nk, nk):
-                    return True
-            return False
+            return any(dp(cur+nk, nk) for nk in range(max(1, k-1), k+2) if (cur+nk in stones))
         return dp(1, 1)
 
     def test1(self):

@@ -3,7 +3,7 @@ from unittest import TestCase
 
 
 class CircularArrayLoop(TestCase):
-    # by union_find
+    # by union_find: proof: only the root of each set has not been visited yet, so loop if x -> y and y in x's set
     def circularArrayLoop(self, nums: 'List[int]') -> 'bool':
         n = len(nums)
         parent = dict((i, i) for i in range(n))

@@ -23,6 +23,28 @@ class DecodeString(TestCase):
             return res, i
         return "".join(dec(0)[0])
 
+    # # iter
+    # def decodeString(self, s: 'str') -> 'str':
+    #     st, parts, digits = [], [], []
+    #     for c in s:
+    #         if c.isdigit():
+    #             digits.append(c)
+    #         elif c == '[':
+    #             k = int("".join(digits))
+    #             digits = []
+    #             st.append(parts)
+    #             st.append(k)
+    #             parts = []
+    #         elif c == ']':
+    #             str = "".join(parts)
+    #             k = st.pop()
+    #             parts = st.pop()
+    #             parts.append(k*str)
+    #         else:
+    #             parts.append(c)
+    #     return "".join(parts)
+
+
     def test1(self):
         self.assertEqual("aaabcbc", self.decodeString("3[a]2[bc]"))
 

@@ -24,5 +24,19 @@ class LongestAbsoluteFilePath(TestCase):
                 sums.append(sum)
         return ret
 
+
+    def lengthLongestPath(self, input):
+        nest, ret = [], 0
+        for line in input.split("\n"):
+            d = 0
+            while line[d] == "\t":
+                d += 1
+            if d >= len(nest): nest.append(0)
+            nest[d] = (nest[d-1]+1 if d else 0) + len(line) - d
+            if "." in line:
+                ret = max(ret, nest[d])
+        return ret
+
+
     def test1(self):
         self.assertEqual(32, self.lengthLongestPath("dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"))

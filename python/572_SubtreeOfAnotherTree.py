@@ -19,6 +19,11 @@ class SubtreeOfAnotherTree(TestCase):
                (not exact and (self.isSubtree(s.left, t) or self.isSubtree(s.right, t)))
 
     # # O(m+n) by compare 2 pre-orders, if using O(m+n) find_substring
+    # def isSubtree(self, s: 'TreeNode', t: 'TreeNode') -> 'bool':
+    #     ps, pt = self.preorder(s), self.preorder(t)
+    #     # return pt in ps
+    #     return self.kmp(ps, pt)
+    #
     # def preorder(self, node):
     #     order, rem = [''], []
     #     while node or rem:
@@ -32,9 +37,23 @@ class SubtreeOfAnotherTree(TestCase):
     #     order.extend(['/', ''])
     #     return ".".join(order)
     #
-    # def isSubtree(self, s: 'TreeNode', t: 'TreeNode') -> 'bool':
-    #     ps, pt = self.preorder(s), self.preorder(t)
-    #     return pt in ps
+    # def kmp(self, s, p):
+    #     f, m = [-1], len(p)
+    #     for i, c in enumerate(p):
+    #         if i+1 >= m: break
+    #         j = f[i]
+    #         while j >= 0 and c != p[j]:
+    #             j = f[j]
+    #         f.append(j+1)
+    #     # for i, j in enumerate(f):         # optimize
+    #     #     if j >= 0 and p[j] == p[i]: f[i] = f[j]
+    #     j = 0
+    #     for c in s:
+    #         while j >= 0 and p[j] != c:
+    #             j = f[j]
+    #         j += 1
+    #         if j == m: return True
+    #     return False
 
     def test1(self):
         s = TreeNode.build_from_layerorder([3, 4, 5, 1, 2])

@@ -1,6 +1,6 @@
 from unittest import TestCase
 # https://leetcode.com/problems/random-pick-with-weight
-import random
+import random, bisect
 
 
 class RandomPickWithWeight:
@@ -22,3 +22,17 @@ class RandomPickWithWeight:
                 r = m - 1
         return l
 
+    # def pickIndex(self) -> 'int':
+    #     return bisect.bisect(self.sums, random.randint(0, self.sums[-1]-1))
+
+# by check each one:
+# class RandomPickWithWeight:
+#     def __init__(self, w: 'List[int]'):
+#         self.w = w
+#
+#     def pickIndex(self) -> 'int':
+#         pre = cur = 0
+#         for i, v in enumerate(self.w):
+#             pre += v
+#             if random.randint(1, pre) <= v: cur = i
+#         return cur
