@@ -1,5 +1,6 @@
 from unittest import TestCase
 # https://leetcode.com/problems/falling-squares/
+import bisect
 
 index = []
 
@@ -65,9 +66,45 @@ class FallingSquares(TestCase):
             res.append(root.max)
         return res
 
+    # # naive
+    # def fallingSquares(self, positions: 'List[List[int]]') -> 'List[int]':
+    #     global index
+    #     axis = set(x for l, h in positions for x in (l, l+h))
+    #     index = {v: i for i, v in enumerate(sorted(axis))}
+    #
+    #     res = []
+    #     cur = [0 for _ in range(len(axis))]
+    #     for l, h in positions:
+    #         l, r = index[l], index[l+h]
+    #         h += max(cur[l:r])
+    #         for i in range(l, r): cur[i] = h
+    #         res.append(max(res[-1], h) if res else h)
+    #     return res
+    #
+    # # naive condensed: only need to store left info
+    # def fallingSquares(self, positions: 'List[List[int]]') -> 'List[int]':
+    #     global index
+    #     axis = set(x for l, h in positions for x in (l, l+h))
+    #     index = {v: i for i, v in enumerate(sorted(axis))}
+    #
+    #     res, INF = [], float("inf")
+    #     cur = [(0, 0)]
+    #     for l, h in positions:
+    #         l, r = index[l], index[l+h]
+    #         i = bisect.bisect_right(cur, (l, INF))
+    #         j = bisect.bisect_left(cur, (r, -1))
+    #         cover = cur[i-1:j]
+    #         h += max((h for l, h in cover), default=0)
+    #         res.append(max(res[-1], h) if res else h)
+    #         cur[i:j] = [(l, h), (r, cover[-1][1] if cover else 0)]
+    #     return res
+
     def test1(self):
         self.assertEqual([2, 5, 5], self.fallingSquares([[1, 2], [2, 3], [6, 1]]))
 
     def test2(self):
         self.assertEqual([100, 100], self.fallingSquares([[100, 100], [200, 100]]))
+
+    def test3(self):
+        self.assertEqual([5, 7, 7], self.fallingSquares([[1,5],[2,2],[7,5]]))
 
