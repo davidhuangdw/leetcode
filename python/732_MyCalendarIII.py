@@ -1,5 +1,6 @@
 from unittest import TestCase
 # https://leetcode.com/problems/my-calendar-iii/
+import bisect, collections
 
 
 class Node:
@@ -41,6 +42,49 @@ class MyCalendarThree(object):
         self.root.add(start, end-1)
         return self.root.max
 
+# # bisect count_delta
+# class MyCalendarThree(object):
+#     def __init__(self):
+#         self.pos = []
+#         self.delta = {}
+#         self.max = 0
+#
+#     def book(self, start, end):
+#         i = bisect.bisect_left(self.pos, start)
+#         if start not in self.delta:
+#             self.delta[start] = self.delta[self.pos[i-1]] if i else 0
+#             self.pos[i:i] = [start]
+#
+#         j = bisect.bisect_left(self.pos, end)
+#         if end not in self.delta:
+#             self.delta[end] = self.delta[self.pos[j-1]]
+#             self.pos[j:j] = [end]
+#         for k in range(i, j):
+#             self.delta[self.pos[k]] = c = self.delta[self.pos[k]] + 1
+#             self.max = max(self.max, c)
+#         return self.max
+#
+# # segment tree by hash
+# class MyCalendarThree(object):
+#     def __init__(self):
+#         self.max = collections.defaultdict(int)
+#         self.lazy = collections.defaultdict(int)
+#
+#     def update(self, l, r, left=0, right=int(1e9), id=1):
+#         if right <= l or r <= left: return
+#         if l <= left and right <= r:
+#             self.max[id] += 1
+#             self.lazy[id] += 1
+#         else:
+#             md = (left + right) >> 1
+#             lc, rc = id*2, id*2+1
+#             self.update(l, r, left, md, lc)
+#             self.update(l, r, md, right, rc)
+#             self.max[id] = self.lazy[id] + max(self.max[lc], self.max[rc])
+#
+#     def book(self, start, end):
+#         self.update(start, end)
+#         return self.max[1]
 
 class Tests(TestCase):
     def test1(self):

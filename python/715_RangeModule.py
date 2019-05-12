@@ -60,7 +60,7 @@ class RangeModule:
                 md.append([right, self.ranges[j][1]])
             self.ranges[i:j+1] = md
 
-# # bisect
+# # bisect intervals
 # class RangeModule:
 #     def __init__(self):
 #         self.rangel = []
@@ -95,6 +95,36 @@ class RangeModule:
 #     def queryRange(self, left, right):
 #         i = bisect.bisect_right(self.ranger, left)
 #         return i < len(self.rangel) and self.rangel[i] <= left and self.ranger[i] >= right
+
+# # bisect points: both ends at the same array
+# class RangeModule:
+#     def __init__(self):
+#         self.ranges = []
+#
+#     # 1. which can be remove when add/remove range [a, b): a<=x<=b, x could be any end
+#     # 2. keep original odd/even when insert
+#     def addRange(self, left, right):
+#         insert = []
+#         i = bisect.bisect_left(self.ranges, left)
+#         if i % 2 == 0: insert.append(left)
+#         j = bisect.bisect_right(self.ranges, right)
+#         if j % 2 == 0: insert.append(right)
+#         self.ranges[i:j] = insert
+#         # print([(self.ranges[i], self.ranges[i+1]) for i in range(0, len(self.ranges), 2)])
+#
+#     def removeRange(self, left, right):
+#         insert = []
+#         i = bisect.bisect_left(self.ranges, left)
+#         if i % 2: insert.append(left)
+#         j = bisect.bisect_right(self.ranges, right)
+#         if j % 2: insert.append(right)
+#         self.ranges[i:j] = insert
+#
+#     # find the nearest left end and right end
+#     def queryRange(self, left, right):
+#         i = bisect.bisect_right(self.ranges, left) -1
+#         j = bisect.bisect_left(self.ranges, right)
+#         return 0 <= i == j-1 < len(self.ranges) and i % 2 == 0
 
 # # segment tree
 # class RangeModule:

@@ -28,6 +28,13 @@ class ReorganizeString(TestCase):
     #     s[::2], s[1::2] = s[:h], s[h:]
     #     return "".join(s)
 
+    # def reorganizeString(self, S: 'str') -> 'str':
+    #     c, h = collections.Counter(S), (len(S)+1)//2
+    #     if any(c[k] > h for k in c): return ""
+    #     s = list(sorted(S, key=lambda x: (-c[x], x)))
+    #     s[::2], s[1::2] = s[:h], s[h:]
+    #     return ''.join(s)
+
     def test1(self):
         self.assertEqual("aba", self.reorganizeString("aab"))
 
@@ -35,6 +42,6 @@ class ReorganizeString(TestCase):
         self.assertEqual("", self.reorganizeString("aaab"))
 
     def test3(self):
-        self.assertEqual("", self.reorganizeString("abbabbaaab"))
+        self.assertEqual("ababababab", self.reorganizeString("abbabbaaab"))
 
 

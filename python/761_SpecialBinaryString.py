@@ -21,5 +21,16 @@ class SpecialBinaryString(TestCase):
             i = j
         return "".join(sorted(mountains, reverse=True))
 
+    # def makeLargestSpecial(self, S):
+    #     if S == "": return S
+    #     subs, d, pre = [], 0, 0
+    #     for i, ch in enumerate(S):
+    #         d += 1 if ch == '1' else -1
+    #         if d == 0:
+    #             subs.append(f"1{self.makeLargestSpecial(S[pre+1:i])}0")
+    #             pre = i+1
+    #     return "".join(sorted(subs, reverse=True))
+
+
     def test1(self):
         self.assertEqual("11100100", self.makeLargestSpecial("11011000"))

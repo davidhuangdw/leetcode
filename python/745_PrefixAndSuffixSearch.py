@@ -1,5 +1,6 @@
 from unittest import TestCase
 # https://leetcode.com/problems/prefix-and-suffix-search
+import collections
 
 
 class WordFilter:
@@ -40,6 +41,41 @@ class WordFilter:
     #         return max(node[ch] if ch == '$' else dfs(i, node[ch]) for ch in node)
     #     return dfs(0, self.root)
 
+# # set intersect
+# class WordFilter:
+#     def __init__(self, words):
+#         d = {w: i for i, w in enumerate(words)}
+#         self.pre = collections.defaultdict(set)
+#         self.suf = collections.defaultdict(set)
+#         for w, i in d.items():
+#             n = len(w)
+#             for j in range(n+1):
+#                 if j < 11: self.pre[w[:j]].add(i)
+#                 if n-j < 11: self.suf[w[j:]].add(i)
+#
+#     def f(self, prefix: 'str', suffix: 'str') -> 'int':
+#         return max(self.pre[prefix] & self.suf[suffix], default=-1)
+#
+# # trie
+# Trie = lambda: collections.defaultdict(Trie)
+# WEIGHT = False
+# class WordFilter:
+#     def __init__(self, words):
+#         self.trie = trie = Trie()
+#         d = {w: i for i, w in enumerate(words)}
+#         for w, i in d.items():
+#             for j in range(max(0, len(w)-10), len(w)+1):
+#                 node = trie
+#                 for ch in w[j:] + '#' + w:
+#                     node = node[ch]
+#                     node[WEIGHT] = max(node.get(WEIGHT, -1), i)
+#
+#     def f(self, prefix: 'str', suffix: 'str') -> 'int':
+#         node = self.trie
+#         for ch in suffix + '#' + prefix:
+#             if ch not in node: return -1
+#             node = node[ch]
+#         return node[WEIGHT]
 
 class WordFilterTests(TestCase):
     def test1(self):

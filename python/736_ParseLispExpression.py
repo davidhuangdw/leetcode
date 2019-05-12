@@ -110,6 +110,50 @@ class ParseLispExpression(TestCase):
     #             context[tokens.pop()] = parseInt(tokens.pop())
     #     return int(tokens[0])
 
+    # # dfs
+    # def evaluate(self, exp: 'str') -> 'int':
+    #     i, n = 0, len(exp)
+    #
+    #     def nextToken():
+    #         nonlocal i
+    #         while i < n and exp[i] == ' ':
+    #             i += 1
+    #         if i == n: return None
+    #         if exp[i] in '()':
+    #             i += 1
+    #             return exp[i-1]
+    #         j = i
+    #         while exp[i] not in '() ':
+    #             i += 1
+    #         return exp[j:i]
+    #
+    #     def eval(scope):
+    #         op, data = None, []
+    #         while True:
+    #             token = nextToken()
+    #             if not token or token == ")": break
+    #             if token == "(":
+    #                 data.append(eval(dict(scope)))
+    #             elif token[0].isdigit() or token[0] == '-':
+    #                 data.append(int(token))
+    #             elif not op:
+    #                 op = token
+    #             elif op[0] == "l":
+    #                 data.append(token)
+    #             else:
+    #                 data.append(scope[token])
+    #
+    #             if len(data) > 1 and op and op[0] == "l":
+    #                 v, x = data.pop(), data.pop()
+    #                 scope[x] = scope.get(v, v)
+    #             # print(op, data, scope)
+    #         if not op: return data[-1]
+    #         type = op[0]
+    #         if type == 'l': return scope.get(data[-1], data[-1])
+    #         if type == 'a': return data[-1] + data[-2]
+    #         if type == 'm': return data[-1] * data[-2]
+    #     return eval({})
+
     def test1(self):
         self.assertEqual(3, self.evaluate("(add 1 2)"))
 
